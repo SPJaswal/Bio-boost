@@ -2,8 +2,8 @@
 
 $host = "localhost";
 $dbname = "bio_boost_db";
-$username = "bio_boost"; // Pas aan indien nodig
-$password = "Bio_boost!"; // Pas aan indien nodig
+$username = "bio_boost";
+$password = "Bio_boost!"; 
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
