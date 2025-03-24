@@ -1,12 +1,14 @@
 const questions = [
-    { label: "Voornaam", type: "text", name: "voornaam" },
-    { label: "Achternaam", type: "text", name: "achternaam" },
-    { label: "E-mailadres", type: "email", name: "email" },
-    { label: "Leeftijd", type: "number", name: "leeftijd" },
-    { label: "Geslacht", type: "button-select", name: "geslacht", options: ["Man", "Vrouw", "Anders"] },
-    { label: "Lengte (cm)", type: "number", name: "lengte" },
-    { label: "Gewicht (kg)", type: "number", name: "gewicht" }
-  ];
+  { label: "Voornaam", type: "text", name: "voornaam" },
+  { label: "Achternaam", type: "text", name: "achternaam" },
+  { label: "E-mailadres", type: "email", name: "email" },
+  { label: "Leeftijd", type: "number", name: "leeftijd" },
+  { label: "Geslacht", type: "button-select", name: "geslacht", options: ["Man", "Vrouw", "Anders"] },
+  { label: "Lengte (cm)", type: "number", name: "lengte" },
+  { label: "Gewicht (kg)", type: "number", name: "gewicht" },
+  { label: "Wachtwoord", type: "password", name: "password" }
+];
+
   
   let currentStep = 0;
   const formData = {};
@@ -142,9 +144,22 @@ const questions = [
       loadQuestion();
     } else {
       questionTitle.textContent = "Registratie voltooid!";
-      formStep.innerHTML = "<p>Dankjewel voor je registratie 🎉</p>";
+      formStep.innerHTML = "<p>Dankjewel voor je registratie 🎉<br>Formulier wordt verzonden...</p>";
       nextBtn.style.display = "none";
-      console.log("Formulierdata:", formData);
+      
+      // Zorg dat alle verzamelde antwoorden ook echt in hidden fields komen,
+      // zodat ze in PHP via $_POST beschikbaar zijn:
+      const multiStepForm = document.getElementById("multiStepForm");
+      Object.keys(formData).forEach((key) => {
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = key;
+        hiddenInput.value = formData[key];
+        multiStepForm.appendChild(hiddenInput);
+      });
+      
+      // Nu mogen we het formulier laten submitten
+      multiStepForm.submit();
     }
   });
   
@@ -152,9 +167,14 @@ const questions = [
   loadQuestion();
   
   // Prevent default form submit
-  document.getElementById("multiStepForm").addEventListener("submit", function (e) {
+// We blokkeren de submit alléén zolang we nog vragen hebben
+document.getElementById("multiStepForm").addEventListener("submit", function (e) {
+  // Laat het formulier alleen doorgaan als we bij de laatste step zijn
+  if (currentStep < questions.length) {
     e.preventDefault();
-  });
+  }
+});
+
   
   // Enter = volgende
   document.getElementById("multiStepForm").addEventListener("keydown", function (e) {
