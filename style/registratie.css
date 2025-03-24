@@ -125,3 +125,58 @@ body {
     color: white;
   }
   
+  /* progress bar */
+
+  .progress-wrapper {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  #progressText {
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    color: #4c514e;
+  }
+  
+  .progress-container {
+    width: 100%;
+    height: 10px;
+    background-color: #d3dcdf;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #aac2d7, #6e899e);
+    transition: width 0.4s ease-in-out;
+    border-radius: 20px;
+  }
+
+  .password-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 1rem auto 0 auto;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 2.5rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #4c514e;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+  
